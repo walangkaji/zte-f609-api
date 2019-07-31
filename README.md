@@ -18,7 +18,7 @@ $password = 'password';
 $debug    = false;
 
 $zteF609  = new ZTEF609($ipModem, $username, $password, $debug);
-$login    = $GTrack->login();
+$login    = $zteF609->login();
 
 var_dump($login);
 // Terusno dewe
@@ -34,7 +34,7 @@ $debug    = false;
 $proxy    = 'xxx.xxx.xxx.xxx:xxxx'
 
 $zteF609  = new ZTEF609($ipModem, $username, $password, $debug, $proxy);
-$login    = $GTrack->login();
+$login    = $zteF609->login();
 
 var_dump($login);
 // Terusno dewe
@@ -49,7 +49,7 @@ $username = 'admin';
 $password = 'password';
 
 $zteF609  = new ZTEF609($ipModem, $username, $password);
-$login    = $GTrack->login();
+$login    = $zteF609->login();
 
 if (!$login) {
     echo 'Login gagal' . PHP_EOL;
