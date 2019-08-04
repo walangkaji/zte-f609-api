@@ -1,5 +1,13 @@
 <?php
 
+namespace walangkaji\ZteF609;
+
+require_once 'simple_html_dom.php';
+
+use walangkaji\ZteF609\Request;
+use walangkaji\ZteF609\Constants;
+use walangkaji\ZteF609\GlobalFunction as Func;
+
 /**
  * ZteF609
  *
@@ -9,7 +17,7 @@
  * 
  * @author walangkaji (https://github.com/walangkaji)
  */
-class ZTEF609
+class ZteApi
 {
 
     function __construct($ipModem, $username, $password, $debug = false, $proxy = null)
@@ -23,6 +31,8 @@ class ZTEF609
         }
 
         $this->modemUrl = "http://$ipModem";
+
+        $this->status   = new Request\Status\Status($this);
     }
 
     /**
@@ -47,7 +57,7 @@ class ZTEF609
             'action'         => 'login',
             'Username'       => $this->username,
             'Password'       => hash('sha256', $this->password . $rand),
-            'Frm_Logintoken' => $this->GetBetween($get, '"Frm_Logintoken", "', '"),'),
+            'Frm_Logintoken' => Func::find($get, 'Frm_Logintoken", "', '"'),
             'UserRandomNum'  => $rand,
         ];
 
@@ -75,8 +85,7 @@ class ZTEF609
      */
     public function reboot()
     {
-        $url = $this->modemUrl . '/getpage.gch?pid=1002&nextpage=manager_dev_conf_t.gch';
-        $get = $this->request($url);
+        $get = $this->request($this->modemUrl . Constants::REBOOT);
 
         $postdata = [
             'IF_ACTION'      => 'devrestart',
@@ -84,7 +93,7 @@ class ZTEF609
             'IF_ERRORPARAM'  => 'SUCC',
             'IF_ERRORTYPE'   => -1,
             'flag'           => 1,
-            '_SESSION_TOKEN' => $this->GetBetween($get, 'session_token = "', '";'),
+            '_SESSION_TOKEN' => Func::find($get, 'session_token = "', '";'),
         ];
 
         $options = [
@@ -92,8 +101,8 @@ class ZTEF609
             'postdata' => $postdata,
         ];
 
-        $request = $this->request($url, $options);
-        $cek     = $this->GetBetween($request, "Transfer_meaning('flag','", "');");
+        $request = $this->request($this->modemUrl . Constants::REBOOT, $options);
+        $cek     = Func::find($request, "flag','", "'");
 
         if ($cek == 1) {
             $this->debug(__FUNCTION__, 'Berhasil Reboot modem.');
@@ -113,7 +122,7 @@ class ZTEF609
      */
     private function cekLogin()
     {
-        $url      = $this->modemUrl . '/template.gch';
+        $url      = $this->modemUrl . Constants::TEMPLATE;
         $response = $this->request($url);
 
         if ($this->httpCode != 200) {
@@ -121,24 +130,6 @@ class ZTEF609
         }
 
         return true;
-    }
-
-    /**
-     * Untuk cari string diantara string
-     * 
-     * @param string $content contentnya
-     * @param string $start   awalan
-     * @param string $end     akhiran
-     */
-    private function GetBetween($content, $start, $end)
-    {
-        $r = explode($start, $content);
-        if (isset($r[1])){
-            $r = explode($end, $r[1]);
-            return $r[0];
-        }
-
-        return '';
     }
 
     /**
@@ -152,7 +143,6 @@ class ZTEF609
         if ($this->debug) {
             echo "[" . date('h:i:s A') . "]: $function" . str_repeat(' ', $space);
             echo (empty($text) ? '' : ': ' . $text) . PHP_EOL;
-            // echo $text . PHP_EOL;
         }
     }
 
@@ -167,6 +157,8 @@ class ZTEF609
      */
     public function request($url, $options = [])
     {
+        $userAgent = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/76.0.3809.87 Safari/537.36';
+
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, $url);
         curl_setopt($ch, CURLOPT_TIMEOUT, 30);
@@ -178,7 +170,7 @@ class ZTEF609
         curl_setopt($ch, CURLOPT_COOKIEFILE, 'cookie.txt'); 
         curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, FALSE);
         curl_setopt($ch, CURLOPT_SSL_VERIFYHOST,  2);
-        curl_setopt($ch, CURLOPT_USERAGENT, 'Mozilla/5.0 (Windows NT 6.1; WOW64; rv:54.0) Gecko/20100101 Firefox/54.0');
+        curl_setopt($ch, CURLOPT_USERAGENT, $userAgent);
 
         if ($this->proxy) {
             curl_setopt($ch, CURLOPT_PROXY, $this->proxy);
