@@ -10,15 +10,14 @@ use walangkaji\ZteF609\GlobalFunction as Func;
  */
 class UserInterface extends Status
 {
-
-    function __construct($parent)
+    public function __construct($parent)
     {
         $this->zte = $parent->zte;
     }
 
     /**
      * Get WAN Connection information
-     * 
+     *
      * @return object
      */
     public function wlan()
@@ -34,17 +33,18 @@ class UserInterface extends Status
 
         $map = [];
         for ($i=0; $i <= 3 ; $i++) {
-
             $authType = $this->getAuthenticationType(
                 $dat["BeaconType$i"],
                 $dat["WEPAuthMode$i"],
                 $dat["WPAAuthMode$i"],
-                $dat["11iAuthMode$i"]);
+                $dat["11iAuthMode$i"]
+            );
 
             $encryptionType = $this->getEncryptionType(
                 $dat["BeaconType$i"],
                 $dat["WPAEncryptType$i"],
-                $dat["11iEncryptType$i"]);
+                $dat["11iEncryptType$i"]
+            );
 
             $map["wlan_$i"] = [
                 'enable'                   => boolval($dat["Enable$i"]),
@@ -80,7 +80,7 @@ class UserInterface extends Status
 
     /**
      * Get Ethernet information
-     * 
+     *
      * @return object
      */
     public function ethernet()
@@ -89,7 +89,7 @@ class UserInterface extends Status
         $dom     = str_get_html($request);
         $data    = [];
 
-        foreach($dom->find('table#TestContent tr') as $key => $val) {
+        foreach ($dom->find('table#TestContent tr') as $key => $val) {
             $cari          = $val->find('td');
             $keys          = strtolower(str_replace([' ', '/'], '_', rtrim($cari[0]->plaintext)));
             $data[$keys][] = html_entity_decode($cari[1]->plaintext);
@@ -122,7 +122,7 @@ class UserInterface extends Status
 
     /**
      * Get USB information
-     * 
+     *
      * @return object
      */
     public function usb()
@@ -131,7 +131,7 @@ class UserInterface extends Status
         $dom     = str_get_html($request);
         $data    = [];
 
-        foreach($dom->find('table#TestContent tr') as $key => $val) {
+        foreach ($dom->find('table#TestContent tr') as $key => $val) {
             $cari        = $val->find('td');
             $keys        = strtolower(str_replace([' ', '/'], '_', rtrim($cari[0]->plaintext)));
             $data[$keys] = html_entity_decode($cari[1]->plaintext);
@@ -142,7 +142,7 @@ class UserInterface extends Status
 
     /**
      * Get Authentication Type
-     * 
+     *
      * @param  string $beaconType  emboh pikir keri
      * @param  string $WEPAuthMode emboh pikir keri
      * @param  string $WPAAuthMode emboh pikir keri
@@ -152,26 +152,26 @@ class UserInterface extends Status
     {
         if ($beaconType == "None" || ($beaconType == "Basic" && $WEPAuthMode == "None")) {
             return 'Open System';
-        }elseif ($beaconType == "Basic" && $WEPAuthMode == "SharedAuthentication") {
+        } elseif ($beaconType == "Basic" && $WEPAuthMode == "SharedAuthentication") {
             return 'Shared Key';
-        }elseif ($beaconType == "WPA" && $WPAAuthMode == "PSKAuthentication") {
+        } elseif ($beaconType == "WPA" && $WPAAuthMode == "PSKAuthentication") {
             return 'WPA-PSK';
-        }elseif ($beaconType == "11i" && $AuthMode11i == "PSKAuthentication") {
+        } elseif ($beaconType == "11i" && $AuthMode11i == "PSKAuthentication") {
             return 'WPA2-PSK';
-        }elseif ($beaconType == "WPAand11i" && $WPAAuthMode == "PSKAuthentication" && $AuthMode11i == "PSKAuthentication") {
+        } elseif ($beaconType == "WPAand11i" && $WPAAuthMode == "PSKAuthentication" && $AuthMode11i == "PSKAuthentication") {
             return 'WPA/WPA2-PSK';
-        }elseif ($beaconType == "WPA" && $WPAAuthMode == "EAPAuthentication") {
+        } elseif ($beaconType == "WPA" && $WPAAuthMode == "EAPAuthentication") {
             return 'WPA-EAP';
-        }elseif ($beaconType == "11i" && $AuthMode11i == "EAPAuthentication") {
+        } elseif ($beaconType == "11i" && $AuthMode11i == "EAPAuthentication") {
             return 'WPA2-EAP';
-        }elseif ($beaconType == "WPAand11i" && $WPAAuthMode == "EAPAuthentication" && $AuthMode11i == "EAPAuthentication") {
+        } elseif ($beaconType == "WPAand11i" && $WPAAuthMode == "EAPAuthentication" && $AuthMode11i == "EAPAuthentication") {
             return 'WPA/WPA2-EAP';
         }
     }
 
     /**
      * Get Encryption Type
-     * 
+     *
      * @param  string $beaconType     emboh ra dong
      * @param  string $WPAEncryptType emboh ra dong
      * @param  string $EncryptType11i emboh ra dong
@@ -180,21 +180,20 @@ class UserInterface extends Status
     {
         if ($beaconType == "None") {
             return 'None';
-        }elseif ($beaconType == "Basic") {
+        } elseif ($beaconType == "Basic") {
             return 'WEP';
-        }elseif (($beaconType == "WPA" && $WPAEncryptType == "TKIPEncryption") ||
+        } elseif (($beaconType == "WPA" && $WPAEncryptType == "TKIPEncryption") ||
             ($beaconType == "11i" && $EncryptType11i == "TKIPEncryption") ||
             ($beaconType == "WPAand11i" && $WPAEncryptType == "TKIPEncryption")) {
             return 'TKIP';
-        }elseif (($beaconType == "WPA" && $WPAEncryptType == "AESEncryption") ||
+        } elseif (($beaconType == "WPA" && $WPAEncryptType == "AESEncryption") ||
             ($beaconType == "11i" && $EncryptType11i == "AESEncryption") ||
             ($beaconType == "WPAand11i" && $WPAEncryptType == "AESEncryption")) {
             return 'AES';
-        }elseif (($beaconType == "WPA" && $WPAEncryptType == "TKIPandAESEncryption") ||
+        } elseif (($beaconType == "WPA" && $WPAEncryptType == "TKIPandAESEncryption") ||
             ($beaconType == "11i" && $EncryptType11i == "TKIPandAESEncryption") ||
             ($beaconType == "WPAand11i" && $WPAEncryptType == "TKIPandAESEncryption")) {
             return 'TKIP+AES';
         }
     }
-
 }

@@ -14,13 +14,12 @@ use walangkaji\ZteF609\GlobalFunction as Func;
  * CATATAN FENTING DEK:
  * - Library ini dibuat tidak untuk kejahatan ataupun kegiatan yang merugikan orang lain,
  *   apalagi untuk usil ke teman atau sanak saudara, itu dosa dek. Mending langsung gelut aja.
- * 
+ *
  * @author walangkaji (https://github.com/walangkaji)
  */
 class ZteApi
 {
-
-    function __construct($ipModem, $username, $password, $debug = false, $proxy = null)
+    public function __construct($ipModem, $username, $password, $debug = false, $proxy = null)
     {
         $this->username = $username;
         $this->password = $password;
@@ -37,7 +36,7 @@ class ZteApi
 
     /**
      * Fungsi untuk login
-     * 
+     *
      * @return boolean
      */
     public function login()
@@ -71,7 +70,7 @@ class ZteApi
 
         if ($cekLogin) {
             $this->debug(__FUNCTION__, 'Berhasil login dengan user ' . $this->username);
-        }else{
+        } else {
             $this->debug(__FUNCTION__, 'Gagal login dengan user ' . $this->username);
         }
 
@@ -80,7 +79,7 @@ class ZteApi
 
     /**
      * Fungsi untuk reboot modem
-     * 
+     *
      * @return boolean
      */
     public function reboot()
@@ -117,7 +116,7 @@ class ZteApi
 
     /**
      * Fungsi untuk cek login
-     * 
+     *
      * @return boolean
      */
     private function cekLogin()
@@ -142,13 +141,13 @@ class ZteApi
 
         if ($this->debug) {
             echo "[" . date('h:i:s A') . "]: $function" . str_repeat(' ', $space);
-            echo (empty($text) ? '' : ': ' . $text) . PHP_EOL;
+            echo(empty($text) ? '' : ': ' . $text) . PHP_EOL;
         }
     }
 
     /**
      * Curl request
-     * 
+     *
      * @param  string $url     url request
      * @param  array  $options options yang akan digunakan
      *                         array  header    untuk setting headernya
@@ -167,9 +166,9 @@ class ZteApi
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
         curl_setopt($ch, CURLOPT_COOKIEJAR, 'cookie.txt');
-        curl_setopt($ch, CURLOPT_COOKIEFILE, 'cookie.txt'); 
-        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, FALSE);
-        curl_setopt($ch, CURLOPT_SSL_VERIFYHOST,  2);
+        curl_setopt($ch, CURLOPT_COOKIEFILE, 'cookie.txt');
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 2);
         curl_setopt($ch, CURLOPT_USERAGENT, $userAgent);
 
         if ($this->proxy) {
@@ -179,28 +178,22 @@ class ZteApi
         if (!empty($options)) {
             if (isset($options['header'])) {
                 curl_setopt($ch, CURLOPT_HTTPHEADER, $options['header']);
-            }
-            elseif (isset($options['useragent'])) {
+            } elseif (isset($options['useragent'])) {
                 curl_setopt($ch, CURLOPT_USERAGENT, $options['useragent']);
-            }
-            elseif (isset($options['method'])) {
-
+            } elseif (isset($options['method'])) {
                 if (strtolower($options['method']) == 'post') {
                     curl_setopt($ch, CURLOPT_POST, true);
                     curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($options['postdata']));
-                }
-                elseif (strtolower($options['method']) == 'delete') {
+                } elseif (strtolower($options['method']) == 'delete') {
                     curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'DELETE');
-                }
-                elseif (strtolower($options['method']) == 'put') {
+                } elseif (strtolower($options['method']) == 'put') {
                     curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'PUT');
                     curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($options['postdata']));
                 }
-
             }
         }
 
-        curl_setopt($ch, CURLOPT_HEADER, 0);           
+        curl_setopt($ch, CURLOPT_HEADER, 0);
         curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
 
         $html = curl_exec($ch);

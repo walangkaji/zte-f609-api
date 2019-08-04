@@ -10,15 +10,14 @@ use walangkaji\ZteF609\GlobalFunction as Func;
  */
 class NetworkInterface extends Status
 {
-
-    function __construct($parent)
+    public function __construct($parent)
     {
         $this->zte = $parent->zte;
     }
 
     /**
      * Get WAN Connection information
-     * 
+     *
      * @return object
      */
     public function wanConnection()
@@ -28,14 +27,14 @@ class NetworkInterface extends Status
 
         $data = [];
 
-        foreach($dom->find('table#TestContent0 tr') as $key) {
+        foreach ($dom->find('table#TestContent0 tr') as $key) {
             $cari  = $key->find('td');
             $keys  = strtolower(str_replace(' ', '_', $cari[0]->plaintext));
 
 
             if ($keys == 'disconnect_reason') {
                 $value = $cari[1]->plaintext;
-            }else{
+            } else {
                 $value = html_entity_decode($key->find('td.tdright input', 0)->attr['value']);
             }
 

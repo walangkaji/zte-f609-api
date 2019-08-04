@@ -1,7 +1,7 @@
 <?php
 
 namespace walangkaji\ZteF609;
- 
+
 /**
  * Fungsi global
  */
@@ -9,7 +9,7 @@ class GlobalFunction
 {
     /**
      * Untuk cari string diantara string
-     * 
+     *
      * @param string $content contentnya
      * @param string $start   awalan
      * @param string $end     akhiran
@@ -17,7 +17,7 @@ class GlobalFunction
     public static function getBetween($content, $start, $end)
     {
         $r = explode($start, $content);
-        if (isset($r[1])){
+        if (isset($r[1])) {
             $r = explode($end, $r[1]);
             return $r[0];
         }
@@ -37,5 +37,4 @@ class GlobalFunction
     {
         return number_format($number, $decimals, '.', '');
     }
-
 }

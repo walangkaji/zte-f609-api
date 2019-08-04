@@ -11,8 +11,7 @@ use walangkaji\ZteF609\GlobalFunction as Func;
  */
 class Status extends ZteApi
 {
-
-    function __construct($parent)
+    public function __construct($parent)
     {
         $this->zte   = $parent;
         $this->NetworkInterface = new NetworkInterface($this);
@@ -21,7 +20,7 @@ class Status extends ZteApi
 
     /**
      * Get device information
-     * 
+     *
      * @return object
      */
     public function deviceInformation()
@@ -30,7 +29,7 @@ class Status extends ZteApi
         $dom     = str_get_html($request);
 
         $data = [];
-        foreach($dom->find('table#TABLE_DEV tr') as $key) {
+        foreach ($dom->find('table#TABLE_DEV tr') as $key) {
             $cari        = $key->find('td');
             $keys        = strtolower(str_replace(' ', '_', $cari[0]->plaintext));
             $data[$keys] = ltrim(rtrim(html_entity_decode($cari[1]->plaintext)));
@@ -65,5 +64,4 @@ class Status extends ZteApi
 
         return json_decode(json_encode($data));
     }
-
 }
