@@ -1,2 +1,4 @@
 test.php
 cookie.txt
+vendor/
+composer.lock

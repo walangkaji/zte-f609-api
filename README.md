@@ -3,27 +3,22 @@
 Library ini merupakan **Emboh**. TITIK
 
 # Support me
-- ![Paypal](https://raw.githubusercontent.com/reek/anti-adblock-killer/gh-pages/images/paypal.png) Paypal: [Se-Ikhlasnya Saja](https://www.paypal.me/walangkaji)
+- ![Paypal](https://raw.githubusercontent.com/walangkaji/emboh/master/img/paypal.png) Paypal: [Se-Ikhlasnya Saja](https://www.paypal.me/walangkaji)
 
 
-## Cara Install
-#### 1. Via Clone Tepo
+## Install
+#### Composer
 ```sh
-$ git clone https://github.com/walangkaji/ZTE-F609-API.git
+$ composer require walangkaji/zte-f609-api
 $ cd ZTE-F609-API/
 $ composer install
 ```
-#### 2. Via Donglot Tepo
-1. Download zip [Disini](https://github.com/walangkaji/ZTE-F609-API/archive/master.zip).
-2. Extract.
-3. Install requirements menggunakan composer:
+#### Clone
 ```sh
+$ git clone https://github.com/walangkaji/zte-f609-api.git
+$ cd zte-f609-api/
 $ composer install
 ```
-
-## Saya belum mempunyai Composer Pak...
-
-Tenang, anda bisa Install & Download [Disini](https://getcomposer.org/download/).
 
 ## Cara Pakai
 ```php
@@ -120,4 +115,4 @@ Apabila kalian pengen nambahin ya monggo dengan senang hati akan diterima.
 Cukup sekian dan Matursuwun.
 
 Jangan lupa kalo mau support seikhlasnya bisa lewat sini:
-- ![Paypal](https://raw.githubusercontent.com/reek/anti-adblock-killer/gh-pages/images/paypal.png) Paypal: [Se-Ikhlasnya Saja](https://www.paypal.me/walangkaji)
+- ![Paypal](https://raw.githubusercontent.com/walangkaji/emboh/master/img/paypal.png) Paypal: [Se-Ikhlasnya Saja](https://www.paypal.me/walangkaji)
