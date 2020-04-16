@@ -10,8 +10,6 @@ Library ini merupakan **Emboh**. TITIK
 #### Composer
 ```sh
 $ composer require walangkaji/zte-f609-api
-$ cd ZTE-F609-API/
-$ composer install
 ```
 #### Clone
 ```sh
