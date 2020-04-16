@@ -1,7 +1,8 @@
 {
     "name": "walangkaji/zte-f609-api",
-    "description": "Emboh",
+    "description": "ZTE F609 Unofficial API",
     "type": "library",
+    "keywords": ["json", "php", "array"],
     "license": "MIT",
     "authors": [
         {
