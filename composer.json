@@ -2,7 +2,7 @@
     "name": "walangkaji/zte-f609-api",
     "description": "Emboh",
     "type": "library",
-    "license": "emboh",
+    "license": "MIT",
     "authors": [
         {
             "name": "walangkaji",
