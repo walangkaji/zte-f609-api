@@ -1,4 +1,7 @@
 <?php
+/**
+ * @author walangkaji (https://github.com/walangkaji)
+ */
 
 namespace walangkaji\ZteF609\Request\Status;
 
@@ -13,7 +16,7 @@ class Status extends ZteApi
 {
     public function __construct($parent)
     {
-        $this->zte   = $parent;
+        $this->zte              = $parent;
         $this->NetworkInterface = new NetworkInterface($this);
         $this->UserInterface    = new UserInterface($this);
     }
@@ -44,6 +47,7 @@ class Status extends ZteApi
 
     /**
      * Get VoIP Status
+     *
      * @return object
      */
     public function voIpStatus()

@@ -4,8 +4,6 @@ namespace walangkaji\ZteF609;
 
 require_once 'simple_html_dom.php';
 
-use walangkaji\ZteF609\Request;
-use walangkaji\ZteF609\Constants;
 use walangkaji\ZteF609\GlobalFunction as Func;
 
 /**
@@ -24,11 +22,7 @@ class ZteApi
         $this->username = $username;
         $this->password = $password;
         $this->proxy    = $proxy;
-
-        if ($debug) {
-            $this->debug = true;
-        }
-
+        $this->debug    = $debug ? true : false;
         $this->modemUrl = "http://$ipModem";
 
         $this->status   = new Request\Status\Status($this);
@@ -37,7 +31,7 @@ class ZteApi
     /**
      * Fungsi untuk login
      *
-     * @return boolean
+     * @return bool
      */
     public function login()
     {
@@ -80,7 +74,7 @@ class ZteApi
     /**
      * Fungsi untuk reboot modem
      *
-     * @return boolean
+     * @return bool
      */
     public function reboot()
     {
@@ -117,7 +111,7 @@ class ZteApi
     /**
      * Fungsi untuk cek login
      *
-     * @return boolean
+     * @return bool
      */
     private function cekLogin()
     {
@@ -133,6 +127,9 @@ class ZteApi
 
     /**
      * Untuk debug proses
+     *
+     * @param mixed $function
+     * @param mixed $text
      */
     private function debug($function, $text = '')
     {
@@ -140,7 +137,7 @@ class ZteApi
         $space = ($space < 0) ? 0 : $space;
 
         if ($this->debug) {
-            echo "[" . date('h:i:s A') . "]: $function" . str_repeat(' ', $space);
+            echo '[' . date('h:i:s A') . "]: $function" . str_repeat(' ', $space);
             echo(empty($text) ? '' : ': ' . $text) . PHP_EOL;
         }
     }
@@ -148,11 +145,11 @@ class ZteApi
     /**
      * Curl request
      *
-     * @param  string $url     url request
-     * @param  array  $options options yang akan digunakan
-     *                         array  header    untuk setting headernya
-     *                         string useragent untuk set useragent
-     *                         string method    'post', 'put', 'delete'
+     * @param string $url     url request
+     * @param array  $options options yang akan digunakan
+     *                        array  header    untuk setting headernya
+     *                        string useragent untuk set useragent
+     *                        string method    'post', 'put', 'delete'
      */
     public function request($url, $options = [])
     {
@@ -196,7 +193,7 @@ class ZteApi
         curl_setopt($ch, CURLOPT_HEADER, 0);
         curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
 
-        $html = curl_exec($ch);
+        $html           = curl_exec($ch);
         $this->httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
         curl_close($ch);
 
