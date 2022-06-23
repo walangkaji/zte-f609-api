@@ -15,4 +15,8 @@ class Constants
     const WAN_CONNECTION     = self::PARAM . 'IPv46_status_wan2_if_t.gch';
     const PON_INFORMATION    = self::PARAM . 'pon_status_link_info_t.gch';
     const MOBILE_NETWORK     = self::PARAM . 'status_mobnet_info_t.gch';
+
+	const STATUS_USERINTERFACE_WLAN		= self::PARAM . 'status_wlanm_info1_t.gch';
+	const STATUS_USERINTERFACE_ETHERNET		= self::PARAM . 'pon_status_lan_info_t.gch';
+	const STATUS_USERINTERFACE_USB		= self::PARAM . 'status_usb_info_t.gch';
 }
