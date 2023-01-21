@@ -1,3 +1,10 @@
+> **Warning**
+> We have decided to stop maintaining this package.
+> 
+> Consider migrating to [ZteF](https://github.com/walangkaji/ztef).
+>
+> Feel free to fork our code and adapt it to your needs.
+
 # ZTE F609 UNOFFICIAL API
 
 Library ini merupakan **Emboh**. TITIK
