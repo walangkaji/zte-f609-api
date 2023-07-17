@@ -22,7 +22,7 @@ class UserInterface extends Status
      */
     public function wlan()
     {
-        $request = $this->zte->request($this->zte->modemUrl . '/getpage.gch?pid=1002&nextpage=status_wlanm_info1_t.gch');
+        $request = $this->zte->request($this->zte->modemUrl . Constants::STATUS_USERINTERFACE_WLAN);
         preg_match_all('/>Transfer_meaning\((.*?)\);/', $request, $match);
         $result = str_replace("'", '', $match[1]);
 
@@ -85,7 +85,7 @@ class UserInterface extends Status
      */
     public function ethernet()
     {
-        $request = $this->zte->request($this->zte->modemUrl . '/getpage.gch?pid=1002&nextpage=pon_status_lan_info_t.gch');
+        $request = $this->zte->request($this->zte->modemUrl . Constants::STATUS_USERINTERFACE_ETHERNET);
         $dom     = str_get_html($request);
         $data    = [];
 
@@ -127,7 +127,7 @@ class UserInterface extends Status
      */
     public function usb()
     {
-        $request = $this->zte->request($this->zte->modemUrl . '/getpage.gch?pid=1002&nextpage=status_usb_info_t.gch');
+        $request = $this->zte->request($this->zte->modemUrl . Constants::STATUS_USERINTERFACE_USB);
         $dom     = str_get_html($request);
         $data    = [];
 
